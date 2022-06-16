@@ -69,86 +69,136 @@ public class IABrain : MonoBehaviour, IInputHandler
         lastInput = input;
     }
 
-    void SetFreeDirection(Transform head, Vector3 lastFoodSpawned)
+    private void SetFreeDirection(Transform head, Vector3 lastFoodSpawned)
     {
         Vector2 input = lastInput;
         if (lastInput.x != 0f)
         {
-            if (lastFoodSpawned.x > head.position.x) 
-            {
-                if (lastFoodSpawned.z > head.position.z) 
-                {
-                    input = lastInput.x > 0 ? Vector2.right : Vector2.up;
-                }
-                else if (lastFoodSpawned.z < head.position.z) 
-                {
-                    input = lastInput.x > 0 ? Vector2.right : Vector2.down;
-                }
-                else
-                {
-                    input = lastInput.x > 0 ? Vector2.right : Vector2.up;
-                }
-            }
-            else if (lastFoodSpawned.x < head.position.x) 
-            {
-                if (lastFoodSpawned.z > head.position.z)
-                {
-                    input = lastInput.x > 0 ? Vector2.up : Vector2.left;
-                }
-                else if (lastFoodSpawned.z < head.position.z)
-                {
-                    input = lastInput.x > 0 ? Vector2.down : Vector2.left;
-                }
-                else
-                {
-                    input = lastInput.x > 0 ? Vector2.up : Vector2.left;
-                }
-            }
-            else
-            {
-                input = lastFoodSpawned.z > head.position.z ? Vector2.up : Vector2.down;
-            }
+            input = GetHorizontalInput(head.transform.position, lastFoodSpawned);
         }
         else if (lastInput.y != 0f)
         {
-            if (lastFoodSpawned.z > head.position.z) 
-            {
-                if (lastFoodSpawned.x > head.position.x) 
-                {
-                    input = lastInput.y > 0 ? Vector2.up : Vector2.right;
-                }
-                else if (lastFoodSpawned.x < head.position.x)
-                {
-                    input = lastInput.y > 0 ? Vector2.up : Vector2.left; 
-                }
-                else
-                {
-                    input = lastInput.y > 0 ? Vector2.up : Vector2.right;
-                }
-            }
-            else if (lastFoodSpawned.z < head.position.z)
-            {
-                if (lastFoodSpawned.x > head.position.x)
-                {
-                    input = lastInput.y > 0 ? Vector2.right : Vector2.down; 
-                }
-                else if (lastFoodSpawned.x < head.position.x)
-                {
-                    input = lastInput.y > 0 ? Vector2.left : Vector2.down;
-                }
-                else
-                {
-                    input = lastInput.y > 0 ? Vector2.right : Vector2.down;
-                }
-            }
-            else
-            {
-                input = lastFoodSpawned.x > head.position.x ? Vector2.right : Vector2.left;
-            }
+            input = GetVerticalInput(head.transform.position, lastFoodSpawned);
         }
 
         lastInput = input;      
+     }
+
+    private bool IsFoodOnRight(float food, float head)
+    {
+        return food > head;
+    }
+
+    private bool IsFoodOnLeft(float food, float head)
+    {
+        return food < head;
+    }
+
+    private bool IsFoodAbove(float food, float head)
+    {
+        return food > head;
+    }
+
+    private bool IsFoodBelow(float food, float head)
+    {
+        return food < head;
+    }
+    private Vector3 GetHorizontalInput(Vector3 head, Vector3 lastFoodSpawned)
+    {
+        if (IsFoodOnRight(lastFoodSpawned.x, head.x))
+        {
+            return GetDirectionOnRight(lastFoodSpawned.z, head.z);
         }
+        else if (IsFoodOnLeft(lastFoodSpawned.x, head.x))
+        {
+            return GetDirectionOnLeft(lastFoodSpawned.z, head.z);
+        }
+        else
+        {
+            return lastFoodSpawned.z > head.z ? Vector2.up : Vector2.down;
+        }
+    }
+
+    private Vector3 GetVerticalInput(Vector3 head, Vector3 lastFoodSpawned)
+    {
+        if (IsFoodAbove(lastFoodSpawned.z, head.z))
+        {
+            return GetDirectionAbove(lastFoodSpawned.x, head.x);
+        }
+        else if (IsFoodBelow(lastFoodSpawned.z, head.z))
+        {
+            return GetDirectionBelow(lastFoodSpawned.x, head.x);
+        }
+        else
+        {
+            return lastFoodSpawned.x > head.x ? Vector2.right : Vector2.left;
+        }
+    }
+
+    private Vector2 GetDirectionOnRight(float food, float head)
+    {
+        if (IsFoodAbove(food, head))
+        {
+            return lastInput.x > 0 ? Vector2.right : Vector2.up;
+        }
+        else if (IsFoodBelow(food, head))
+        {
+            return lastInput.x > 0 ? Vector2.right : Vector2.down;
+        }
+        else
+        {
+            return lastInput.x > 0 ? Vector2.right : Vector2.up;
+        }
+    }
+
+    Vector2 GetDirectionOnLeft(float food, float head)
+    {
+        if (IsFoodAbove(food, head))
+        {
+            return lastInput.x > 0 ? Vector2.up : Vector2.left;
+        }
+        else if (IsFoodBelow(food, head))
+        {
+            return lastInput.x > 0 ? Vector2.down : Vector2.left;
+        }
+        else
+        {
+            return lastInput.x > 0 ? Vector2.up : Vector2.left;
+        }
+    }
+
+    Vector2 GetDirectionAbove(float food, float head)
+    {
+        if (IsFoodOnRight(food, head))
+        {
+            return lastInput.y > 0 ? Vector2.up : Vector2.right;
+        }
+        else if (IsFoodOnLeft(food, head))
+        {
+            return lastInput.y > 0 ? Vector2.up : Vector2.left;
+        }
+        else
+        {
+            return lastInput.y > 0 ? Vector2.up : Vector2.right;
+        }
+    }
+
+    Vector2 GetDirectionBelow(float food, float head)
+    {
+        if (IsFoodOnRight(food, head))
+        {
+            return lastInput.y > 0 ? Vector2.right : Vector2.down;
+        }
+        else if (IsFoodOnLeft(food, head))
+        {
+            return lastInput.y > 0 ? Vector2.left : Vector2.down;
+        }
+        else
+        {
+            return lastInput.y > 0 ? Vector2.right : Vector2.down;
+        }
+    }
+
 }
 
 

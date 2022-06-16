@@ -41,7 +41,7 @@ public class InitializeManagerBehaviour : MonoBehaviour
 
         UILoadingController loadingController = FindObjectOfType<UILoadingController>();
 
-        if (ManagerLocator.TryGetManager<PoolManagerBehaviour>(out PoolManagerBehaviour poolManager))
+        if (ManagerLocator.TryGetManager(out PoolManagerBehaviour poolManager))
         {
             poolManager.OnPoolFinished += OnObjectPoolFinished;
             poolManager.OnPoolLoadUpdate += loadingController.OnLoadUpdate;
@@ -70,6 +70,11 @@ public class InitializeManagerBehaviour : MonoBehaviour
         SceneManager.UnloadSceneAsync(SceneEnum.LoadScene.ToString());
         IsGameReady = true;
         OnGameIsReady?.Invoke();
+    }
+
+    private void OnDisable()
+    {
+        ManagerLocator.UnRegisterManager<InitializeManagerBehaviour>();
     }
 
     private void OnObjectPoolFinished()

@@ -21,6 +21,11 @@ public class PoolManagerBehaviour : MonoBehaviour
         ManagerLocator.RegisterManager(this);
     }
 
+    private void OnDisable()
+    {
+        ManagerLocator.UnRegisterManager<PoolManagerBehaviour>();
+    }
+
     public IEnumerator CreatePool()
     {
         if(initialPool != null)

@@ -29,6 +29,8 @@ public class MementoManagerBehaviour : MonoBehaviour
             ingameManager.OnSnakeAdded -= OnSnakeAdded;
             ingameManager.OnSnakeRemoved -= OnSnakeRemoved;
         }
+
+        ManagerLocator.UnRegisterManager<MementoManagerBehaviour>();
     }
 
     private void OnSnakeAdded(Snake snake)

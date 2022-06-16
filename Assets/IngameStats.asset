@@ -17,11 +17,11 @@ MonoBehaviour:
   rewindSnakeInSecond: 0.1
   ingameFoods:
   - foodPrefab: {fileID: 6238099976407801741, guid: b5134907d016b9745893bb4275d7ea96, type: 3}
-    dropPercentage: 40
+    dropPercentage: 20
   - foodPrefab: {fileID: 509416701445429111, guid: d65657e673dea1b4498b7918ccf35725, type: 3}
-    dropPercentage: 40
+    dropPercentage: 20
   - foodPrefab: {fileID: 4686049689344640275, guid: 1bc8ef0f137b9c94eb5a262c9829bf84, type: 3}
-    dropPercentage: 10
+    dropPercentage: 50
   - foodPrefab: {fileID: 7442037290428970697, guid: 6bd2b990caae8f14ba6c7d8da8c1df41, type: 3}
     dropPercentage: 10
   foodDropTotalPercentage: 100

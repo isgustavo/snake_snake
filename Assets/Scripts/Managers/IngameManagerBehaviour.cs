@@ -39,6 +39,11 @@ public class IngameManagerBehaviour : MonoBehaviour
         }
     }
 
+    private void OnDisable()
+    {
+        ManagerLocator.UnRegisterManager<InitializeManagerBehaviour>();
+    }
+
     private void OnGameIsReady()
     {
         if (ManagerLocator.TryGetManager(out InitializeManagerBehaviour initializeManager))

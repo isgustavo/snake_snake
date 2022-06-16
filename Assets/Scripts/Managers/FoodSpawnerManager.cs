@@ -21,6 +21,11 @@ public class FoodSpawnerManager : MonoBehaviour
         }
     }
 
+    private void OnDisable()
+    {
+        ManagerLocator.UnRegisterManager<FoodSpawnerManager>();
+    }
+
     void OnGameStarted()
     {
         SpawnObject();
