@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MementoManagerBehaviour : MonoBehaviour
 {
-    private Dictionary<int, Stack<MementoState>> states = new();
+    private Dictionary<int, Stack<MementoState>> states = new Dictionary<int, Stack<MementoState>>();
 
     public bool IsActive { get; private set; } = false;
 
@@ -85,7 +85,7 @@ public class MementoManagerBehaviour : MonoBehaviour
         {
             if (states.ContainsKey(playerId) == false)
             {
-                states.Add(playerId, new());
+                states.Add(playerId, new Stack<MementoState>());
             }
             states[playerId].Push(state);
         }

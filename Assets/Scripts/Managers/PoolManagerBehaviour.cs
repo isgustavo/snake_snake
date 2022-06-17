@@ -11,7 +11,7 @@ public class PoolManagerBehaviour : MonoBehaviour
     private GameObjectInitialPool initialPool;
     public int InitialPoolCount => initialPool?.GameObjectList.Count ?? 0;
 
-    Dictionary<int, Queue<GameObject>> objectPools = new();
+    Dictionary<int, Queue<GameObject>> objectPools = new Dictionary<int, Queue<GameObject>>();
 
     public event Action OnPoolLoadUpdate;
     public event Action OnPoolFinished;

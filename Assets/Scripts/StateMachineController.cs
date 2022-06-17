@@ -14,7 +14,7 @@ public abstract class StateMachineController<T> : MonoBehaviour
     public State<T> PreviousState { get; private set; }
     public State<T> CurrentState { get; private set; }
 
-    public Dictionary<Type, State<T>> States { get; protected set; } = new();
+    public Dictionary<Type, State<T>> States { get; protected set; } = new Dictionary<Type, State<T>>();
 
     public event Action<State<T>> OnStateChanged;
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class StatsController
 {
-    readonly Dictionary<Type, IStat> Stats = new();
+    readonly Dictionary<Type, IStat> Stats = new Dictionary<Type, IStat>();
 
     public event Action<IStat> OnStatChanged;
 

@@ -12,8 +12,8 @@ public class Snake : MonoBehaviour
     public int PlayerId { get; private set; }
     public IInputHandler InputHandler { get; private set; }
     public SnakeStateMachineController StateMachine { get; private set; }
-    public StatsController Stats { get; private set; } = new();
-    public List<SnakePart> BodyParts { get; private set; } = new();
+    public StatsController Stats { get; private set; } = new StatsController();
+    public List<SnakePart> BodyParts { get; private set; } = new List<SnakePart>();
 
     Renderer headRenderer;
 

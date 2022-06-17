@@ -24,6 +24,8 @@ public class EndGameManagerBehaviour : MonoBehaviour
         {
             ingameManager.OnGameEnded -= OnGameEnded;
         }
+
+        ManagerLocator.UnRegisterManager<EndGameManagerBehaviour>();
     }
 
     public void OnGameEnded(int winnerPlayerId)

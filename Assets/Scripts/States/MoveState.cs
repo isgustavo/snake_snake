@@ -50,7 +50,7 @@ public class MoveState : SnakeState
     {
         if (ManagerLocator.TryGetManager(out MementoManagerBehaviour mementoManagerBehaviour))
         {
-            List<Vector2> bodyParts = new();
+            List<Vector2> bodyParts = new List<Vector2>();
             foreach (SnakePart snakePart in Context.BodyParts)
             {
                 bodyParts.Add(new Vector2(snakePart.transform.position.x, snakePart.transform.position.z));

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public static class ManagerLocator
 {
-    private static readonly Dictionary<Type, object> managers = new();
+    private static readonly Dictionary<Type, object> managers = new Dictionary<Type, object>();
 
     public static void RegisterManager<T>(T t)
     {

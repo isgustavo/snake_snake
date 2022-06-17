@@ -23,6 +23,12 @@ public class FoodSpawnerManager : MonoBehaviour
 
     private void OnDisable()
     {
+        if (ManagerLocator.TryGetManager(out IngameManagerBehaviour ingameManager))
+        {
+            ingameManager.OnGameStarted -= OnGameStarted;
+            ingameManager.OnGameEnded -= OnGameEnded;
+        }
+
         ManagerLocator.UnRegisterManager<FoodSpawnerManager>();
     }
 
@@ -50,7 +56,7 @@ public class FoodSpawnerManager : MonoBehaviour
             if (newObj == null) return;
             CurrentWorldObject = newObj.GetComponent<IWorldObject>();
             CurrentWorldObject.AddHitListener(OnObjectHit);
-            newObj.transform.position = ingameManager.GetSpawnPoint();
+            newObj.transform.position = ingameManager.GetSpawnPoint(ingameManager.IngameStats.SquareArenaSize);
             newObj.SetActive(true);
 
             OnFoodChanged?.Invoke(CurrentWorldObject);

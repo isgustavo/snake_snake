@@ -23,7 +23,7 @@ public class UIMainMenuController : MonoBehaviour
     private GameObject playerListCellView;
 
     private float holdDeltaTime;
-    private PlayerEnterInput playerEnterInput = new();
+    private PlayerEnterInput playerEnterInput = new PlayerEnterInput();
 
     private void OnEnable()
     {

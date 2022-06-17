@@ -5,9 +5,9 @@ using UnityEngine;
 public class GroundSpawner : MonoBehaviour
 {
     [SerializeField]
-    List<GameObject> walls = new();
+    List<GameObject> walls = new List<GameObject>();
 
-    List<GameObject> ground = new();
+    List<GameObject> ground = new List<GameObject>();
 
     private void OnEnable()
     {

@@ -15,21 +15,36 @@ public enum SceneEnum
 
 public class InitializeManagerBehaviour : MonoBehaviour
 {
-    readonly List<SceneEnum> initialScenes = new()
+    readonly List<SceneEnum> initialScenes = new List<SceneEnum>()
     {
         //SceneEnum.EnvironmentScene
     };
 
-    public bool IsGameReady { get; private set; }
+    private bool isGameReady;
+    public bool IsGameReady
+    {
+        get
+        {
+            return isGameReady;
+        }
+        set
+        {
+            isGameReady = value;
+            if(isGameReady)
+            {
+                OnGameIsReady?.Invoke();
+            }
+        }
+    }
     public bool IsObjectPoolFinished { get; private set; }
 
     public event Action OnGameIsReady;
 
     protected void OnEnable()
     {
-        ManagerLocator.RegisterManager(this);
         IsGameReady = false;
         IsObjectPoolFinished = false;
+        ManagerLocator.RegisterManager(this);
     }
 
     private IEnumerator Start()
@@ -41,22 +56,24 @@ public class InitializeManagerBehaviour : MonoBehaviour
 
         UILoadingController loadingController = FindObjectOfType<UILoadingController>();
 
-        if (ManagerLocator.TryGetManager(out PoolManagerBehaviour poolManager))
-        {
-            poolManager.OnPoolFinished += OnObjectPoolFinished;
-            poolManager.OnPoolLoadUpdate += loadingController.OnLoadUpdate;
+        CreatePool(loadingController);
 
-            StartCoroutine(poolManager.CreatePool());
-        }
-        else
-        {
-            IsObjectPoolFinished = true;
-        }
+       yield return StartCoroutine(LoadScenesCoroutine(loadSceneAsync, loadingController));
 
-        loadingController.SetTotalItemsToLoad(initialScenes.Count + poolManager.InitialPoolCount);
+        yield return new WaitUntil(() => IsObjectPoolFinished);
 
-        yield return new WaitForEndOfFrame();
+        SceneManager.UnloadSceneAsync(SceneEnum.LoadScene.ToString());
+        
+        IsGameReady = true;
+    }
 
+    private void OnDisable()
+    {
+        ManagerLocator.UnRegisterManager<InitializeManagerBehaviour>();
+    }
+
+    IEnumerator LoadScenesCoroutine(AsyncOperation loadSceneAsync, UILoadingController loadingController)
+    {
         foreach (SceneEnum scene in initialScenes)
         {
             loadSceneAsync = SceneManager.LoadSceneAsync(scene.ToString(), LoadSceneMode.Additive);
@@ -65,16 +82,24 @@ public class InitializeManagerBehaviour : MonoBehaviour
             loadingController.OnLoadUpdate();
         }
 
-        yield return new WaitUntil(() => IsObjectPoolFinished);
-
-        SceneManager.UnloadSceneAsync(SceneEnum.LoadScene.ToString());
-        IsGameReady = true;
-        OnGameIsReady?.Invoke();
+        yield return 0;
     }
 
-    private void OnDisable()
+    private void CreatePool(UILoadingController loadingController)
     {
-        ManagerLocator.UnRegisterManager<InitializeManagerBehaviour>();
+        if (ManagerLocator.TryGetManager(out PoolManagerBehaviour poolManager))
+        {
+            poolManager.OnPoolFinished += OnObjectPoolFinished;
+            poolManager.OnPoolLoadUpdate += loadingController.OnLoadUpdate;
+
+            StartCoroutine(poolManager.CreatePool());
+
+            loadingController.SetTotalItemsToLoad(initialScenes.Count + poolManager.InitialPoolCount);
+        }
+        else
+        {
+            IsObjectPoolFinished = true;
+        }
     }
 
     private void OnObjectPoolFinished()

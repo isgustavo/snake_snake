@@ -11,7 +11,7 @@ public class IngameManagerBehaviour : MonoBehaviour
     [SerializeField]
     private IngameStats ingameStats;
 
-    public Dictionary<int, Player> Players { get; private set; } = new();
+    public Dictionary<int, Player> Players { get; private set; } = new Dictionary<int, Player>();
 
     public event Action<Player> OnPlayerAdded;
     public event Action<Player> OnPlayerRemoved;
@@ -84,7 +84,7 @@ public class IngameManagerBehaviour : MonoBehaviour
         {
             Players[playerId].SetSnake(SpawnSnake(), initialSnakeValues, IngameStats.InitialSnakeSize);
             OnSnakeAdded?.Invoke(Players[playerId].Snake);
-            Players[playerId].Snake.transform.position = GetSpawnPoint();
+            Players[playerId].Snake.transform.position = GetSpawnPoint(IngameStats.SquareArenaSize - 4);
 
             Players[playerId].Snake.OnSnakeStatsChanged += OnSnakeStatsChanged;
             Players[playerId].Snake.gameObject.SetActive(true);
@@ -107,12 +107,12 @@ public class IngameManagerBehaviour : MonoBehaviour
         return UnityEngine.Random.Range(-range, range);
     }
 
-    public Vector3 GetSpawnPoint()
+    public Vector3 GetSpawnPoint(int areaSize)
     {
-        Vector3 point = new Vector3(GetRandomRangePoint(IngameStats.SquareArenaSize), 1, GetRandomRangePoint(IngameStats.SquareArenaSize));
+        Vector3 point = new Vector3(GetRandomRangePoint(areaSize), 1, GetRandomRangePoint(areaSize));
         if (Physics.Raycast(point + Vector3.up * 10f, Vector3.down, out RaycastHit hitInfo, 15f, CollisionLayers.SNAKE | CollisionLayers.FOOD))
         {
-            return GetSpawnPoint();
+            return GetSpawnPoint(areaSize);
         }
         return point;
     }

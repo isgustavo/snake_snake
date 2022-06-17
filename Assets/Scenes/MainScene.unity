@@ -202,7 +202,6 @@ Transform:
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 15, z: -0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -220,7 +219,6 @@ GameObject:
   - component: {fileID: 700535175}
   - component: {fileID: 700535177}
   - component: {fileID: 700535176}
-  - component: {fileID: 700535178}
   - component: {fileID: 700535179}
   - component: {fileID: 700535180}
   m_Layer: 0
@@ -240,7 +238,6 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
@@ -257,9 +254,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3716d7cd4692514c97915ea2bfeee6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  test: {fileID: 8656681467537170722, guid: d3004ed04b769fa40b4bcc134aa9fc6d, type: 3}
-  snake: {fileID: 6234024520502642496, guid: 0b4324dabf5651148aa1953a4581f93f, type: 3}
-  initialSnakeValues: {fileID: 11400000, guid: 083c51d9a7671ab41a5488c2637483df, type: 2}
 --- !u!114 &700535175
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -285,7 +279,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 718c1b8b1eeb0ed4c81ddb7a968f04f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerPrefab: {fileID: 8656681467537170722, guid: d3004ed04b769fa40b4bcc134aa9fc6d, type: 3}
   initialSnakeValues: {fileID: 11400000, guid: 083c51d9a7671ab41a5488c2637483df, type: 2}
   ingameStats: {fileID: 11400000, guid: 5e7dc0eb68c198341a0c90eb1b3343e3, type: 2}
 --- !u!114 &700535177
@@ -298,18 +291,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eda10fa3a55546f4a94c073f6cf9269a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &700535178
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 700535172}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1aba5f6bed438f74eb65db14f74b3509, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &700535179
@@ -425,7 +406,6 @@ Transform:
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
